@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from "react";
 
+
 export default function SpotifyBar () {
   const [profile, setProfile] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    const isCallback = url.pathname === "/callback";
-    const code = url.searchParams.get("code");
+    const token = url.searchParams.get("access_token");
 
-    if (isCallback && code) {
-      fetch(`http://localhost:3000/api/auth/callback?code=${code}`)
-        .then(res => res.json())
-        .then(data => {
-          setProfile(data.profile);
-          window.history.replaceState({}, document.title, "/");
-        });
+    if (token) {
+      setAccessToken(token);
+      window.history.replaceState({}, document.title, "/");
     }
   }, []);
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    fetch("https://api.spotify.com/v1/me", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    })
+      .then(res => res.json())
+      .then(data => setProfile(data))
+      .catch(err => console.error("Failed to fetch profile", err));
+  }, [accessToken]);
 
   const handleLogin = () => {
     window.location.href = "http://localhost:3000/api/auth/login";

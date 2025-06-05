@@ -25,9 +25,15 @@ export async function handleSpotifyCallback (req, res) {
   try {
     const tokenData = await exchangeCodeForToken(code);
     const profile = await fetchSpotifyProfile(tokenData.access_token);
-    res.json({ profile, tokens: tokenData });
+    const params = new URLSearchParams({
+      access_token: tokenData.access_token,
+      refresh_token: tokenData.refresh_token,
+      display_name: profile.display_name || '',
+      email: profile.email || ''
+    });
+    res.redirect(`http://localhost:5173/?${params.toString()}`);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to authenticate with Spotify' });
+    res.redirect('http://localhost:5173/?error=spotify_auth_failed');
   }
 }
