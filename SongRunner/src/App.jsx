@@ -1,6 +1,6 @@
 // import { useState } from 'react'
 import './App.css'
-import SpotifyBar from './Components/SpotifyBar'
+import SpotifyBar from '../src/components/SpotifyBar'
 
 function App () {
 
