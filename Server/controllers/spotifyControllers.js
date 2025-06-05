@@ -2,12 +2,13 @@ import querystring from 'querystring';
 import { exchangeCodeForToken, fetchSpotifyProfile } from '../services/spotifyService.js';
 import dotenv from 'dotenv'
 
-dotenv.config
+dotenv.config()
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const redirectUri = process.env.REDIRECT_URI;
 const scope = 'user-read-private user-read-email';
 
 export function redirectToSpotify (req, res) {
+  console.log(clientId)
   const params = querystring.stringify({
     response_type: 'code',
     client_id: clientId,
