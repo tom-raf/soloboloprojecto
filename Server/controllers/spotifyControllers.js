@@ -2,7 +2,7 @@ import querystring from 'querystring';
 import { exchangeCodeForToken, fetchSpotifyProfile } from '../services/spotifyService.js';
 import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const redirectUri = process.env.REDIRECT_URI;
 const scope = 'user-read-private user-read-email';
