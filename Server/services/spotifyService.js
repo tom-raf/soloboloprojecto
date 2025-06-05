@@ -22,3 +22,5 @@ export async function fetchSpotifyProfile (accessToken) {
   });
   return await response.json();
 }
+
+

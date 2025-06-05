@@ -40,7 +40,16 @@ export default function SpotifyBar () {
       {profile.images?.[0]?.url && (
         <img src={profile.images[0].url} alt="Profile" width={100} />
       )}
-      <p>Email: {profile.email}</p>
+      <p></p>
+      <iframe className="spotify-widget"
+        style={{ borderRadius: "12px", marginTop: "1rem" }}
+        src="https://open.spotify.com/embed/track/1lDWb6b6ieDQ2xT7ewTC3G?utm_source=generator"
+        width="300"
+        height="80"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      />
     </div>
   );
 }
