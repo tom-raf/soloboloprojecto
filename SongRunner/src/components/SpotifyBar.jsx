@@ -9,7 +9,7 @@ export default function SpotifyBar () {
     const code = url.searchParams.get("code");
 
     if (isCallback && code) {
-      fetch(`http://localhost:3001/api/auth/callback?code=${code}`)
+      fetch(`http://localhost:3000/api/auth/callback?code=${code}`)
         .then(res => res.json())
         .then(data => {
           setProfile(data.profile);
