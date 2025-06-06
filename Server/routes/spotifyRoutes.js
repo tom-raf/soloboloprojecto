@@ -1,11 +1,12 @@
 import express from 'express';
-import { handleSpotifyCallback, redirectToSpotify } from '../controllers/spotifyControllers.js'
-
+import { getSpotifyProfile, getCurrentlyPlaying } from '../controllers/spotifyControllers.js';
+import { redirectToSpotifyLogin, handleSpotifyCallback } from '../controllers/spotifyAuthController.js';
 const spotifyRouter = express.Router();
 
+spotifyRouter.get('/auth/login', redirectToSpotifyLogin);
+spotifyRouter.get('/auth/callback', handleSpotifyCallback);
 
-spotifyRouter.get('/auth/login', redirectToSpotify) // this is the initial login to get to spotify and allow permissions / generate token
-spotifyRouter.get('/auth/callback', handleSpotifyCallback); // this is the callback that handles spotify redirecting back to the page
+spotifyRouter.get('/profile', getSpotifyProfile);
+spotifyRouter.get('/currently-playing', getCurrentlyPlaying);
 
-
-export default spotifyRouter
+export default spotifyRouter;
