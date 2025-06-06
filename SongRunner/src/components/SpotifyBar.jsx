@@ -41,15 +41,17 @@ export default function SpotifyBar () {
         <img src={profile.images[0].url} alt="Profile" width={100} />
       )}
       <p></p>
-      <iframe className="spotify-widget"
+      {/* <iframe className="spotify-widget"
         style={{ borderRadius: "12px", marginTop: "1rem" }}
         src="https://open.spotify.com/embed/track/1lDWb6b6ieDQ2xT7ewTC3G?utm_source=generator"
         width="300"
         height="80"
-        frameBorder="0"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-      />
+      /> */}
+      <iframe src="https://open.spotify.com/embed/playlist/5bPnKYPCfR2k1wNYMUOk33?utm_source=generator"
+        width="100%" height="352"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
   );
 }
