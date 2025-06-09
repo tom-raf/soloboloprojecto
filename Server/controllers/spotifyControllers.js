@@ -178,27 +178,27 @@ export const createPlaylist = async (req, res) => {
     }
 
     const userId = profileData.id;
+    const genrePlaylistMap = {
+      "pop": "7xNYFGqY4s8pwfkG0vTASD",
+      "rock": "23hD5D7bvXtkJGz2ni7s9e",
+      "hip-hop": "2ZmBEJRMH8rgtVB1GonReM",
+      "electronic": "2ZxWjBMlRYQfENCeMl1Sab",
+      "jazz": "3BVbH9zuT0T0EXodND8LfS",
+      "classical": "34lPKDQ8gTZW4wXDR8G6kM",
+      "dnb": "6a83Dkuyr2OJtlCmAQKG82",
+      "metal": "0cMpgbvQxoOYrT7IoCx2Gn"
+    };
 
-    //get public genre specific playlists
-    //   "pop",
-    //   "rock",
-    //   "hip-hop",
-    //   "electronic",
-    //   "jazz",
-    //   "classical",
-    //   "r-n-b",
-    //   "country",
-    //   "reggae",
-    //   "metal"
-
-    const playlist_id = '23hD5D7bvXtkJGz2ni7s9e'; // have to be really careful with these only some playlists work
+    const genre = req.body.genre;
+    const playlist_id = genrePlaylistMap[genre];
 
     const getPlaylistRes = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       }
-    })
+    });
+
 
 
     const playlistTracksData = await getPlaylistRes.json();

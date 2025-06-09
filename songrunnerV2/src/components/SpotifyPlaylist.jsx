@@ -45,9 +45,7 @@ export default function SpotifyPlaylist () {
     "electronic",
     "jazz",
     "classical",
-    "r-n-b",
-    "country",
-    "reggae",
+    "drum-n-bass",
     "metal"
   ];
 
