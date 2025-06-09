@@ -89,8 +89,7 @@ export const getToken = async (req, res) => {
     accessTokenStore = data.access_token;
     console.log('This is your access token:', accessTokenStore)
 
-    // redirect to frontend with token
-    res.redirect(`http://localhost:5173/?access_token=${accessTokenStore}`);
+    res.redirect(`http://localhost:5173`);
   } catch (error) {
     console.error('Token exchange error:', error);
     res.status(500).json({ error: 'Internal server error during token exchange' });
