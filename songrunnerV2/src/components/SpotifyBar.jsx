@@ -8,16 +8,6 @@ export default function SpotifyBar () {
   const location = useLocation();
 
   useEffect(() => {
-    // const params = new URLSearchParams(location.search); // grab token from redirect url from backend
-    // const token = params.get("access_token");
-
-    // if (token) {
-    //   localStorage.setItem("spotify_access_token", token); // save to local storage
-    //   window.history.replaceState({}, document.title, "/"); // clean url
-    // }
-
-    // const storedToken = localStorage.getItem("spotify_access_token");
-    // if (!storedToken) return;
 
     // fetch spotify profile
     fetch('http://localhost:3000/profile')

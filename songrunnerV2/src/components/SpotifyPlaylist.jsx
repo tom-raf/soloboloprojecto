@@ -3,7 +3,6 @@ import { useState } from 'react';
 export default function SpotifyPlaylist () {
   const [formData, setFormData] = useState({
     genre: '',
-    bpm: '',
     runLength: ''
   });
 
@@ -18,7 +17,10 @@ export default function SpotifyPlaylist () {
       const res = await fetch('http://localhost:3000/playlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          genre: formData.genre,
+          runLength: Number(formData.runLength),
+        }),
       });
 
       const contentType = res.headers.get("content-type");
@@ -63,18 +65,6 @@ export default function SpotifyPlaylist () {
             <option key={genre} value={genre}>{genre}</option>
           ))}
         </select>
-      </label>
-      <label>
-        BPM:
-        <input
-          type="number"
-          name="bpm"
-          value={formData.bpm}
-          required
-          min='40'
-          max='200'
-          onChange={handleChange}
-          placeholder='Desired BPM (min 40 - max 200)' />
       </label>
       <label>
         Run Length (minutes):
