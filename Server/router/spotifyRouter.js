@@ -6,7 +6,7 @@ spotifyRouter.get('/api/auth/login', spotifyLogin);
 spotifyRouter.get('/api/auth/callback', getToken);
 spotifyRouter.get('/profile', getSpotifyProfile); //https://api.spotify.com/v1/me
 spotifyRouter.get('/currently-playing', getCurrentlyPlaying); //"https://api.spotify.com/v1/me/player/currently-playing"
-spotifyRouter.get('/playlist', createPlaylist);
+spotifyRouter.post('/playlist', createPlaylist);
 
 export default spotifyRouter;
 

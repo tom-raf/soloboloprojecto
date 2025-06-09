@@ -1,53 +1,94 @@
-import { useState } from "react"
+import { useState } from 'react';
 
 export default function SpotifyPlaylist () {
-  const [genre, setGenre] = useState("");
-  const [runLength, setRunLength] = useState(""); // in minutes
-  const [bpm, setBpm] = useState("");
+  const [formData, setFormData] = useState({
+    genre: '',
+    bpm: '',
+    runLength: ''
+  });
 
-  // const [message, setMessage] = useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('http://localhost:3000/playlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const contentType = res.headers.get("content-type");
+
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await res.text();
+        throw new Error(`Expected JSON, got: ${text}`);
+      }
+
+      const data = await res.json();
+      console.log('you submitted this form:', data);
+    } catch (err) {
+      console.error('Error submitting form:', err);
+    }
+  };
+
+
+  const genreOptions = [ // they have to be spotify friendly formatting, can add more 
+    "pop",
+    "rock",
+    "hip-hop",
+    "electronic",
+    "jazz",
+    "classical",
+    "r-n-b",
+    "country",
+    "reggae",
+    "metal"
+  ];
 
   return (
-    <div>
-      <form>
-        <h3>Create Playlist by Genre, Run Length & BPM</h3>
-
-        <label>
-          Genre:
-          <input
-            type="text"
-            value={genre}
-            // onChange={(e) => setGenre(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Run Length (minutes):
-          <input
-            type="number"
-            value={runLength}
-            // onChange={(e) => setRunLength(e.target.value)}
-            required
-            min="1"
-          />
-        </label>
-        <br />
-        <label>
-          BPM:
-          <input
-            type="number"
-            value={bpm}
-            // onChange={(e) => setBpm(e.target.value)}
-            required
-            min="30"
-            max="250"
-          />
-        </label>
-        <br />
-        <button type="submit">Create Playlist</button>
-        <p>placeholder</p>
-      </form>
-    </div >
-  )
+    <form onSubmit={handleSubmit}>
+      <label>
+        Genre:
+        <select
+          name="genre"
+          value={formData.genre}
+          onChange={handleChange}
+          required>
+          <option value="">Select a genre</option>
+          {genreOptions.map((genre) => (
+            <option key={genre} value={genre}>{genre}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        BPM:
+        <input
+          type="number"
+          name="bpm"
+          value={formData.bpm}
+          required
+          min='40'
+          max='200'
+          onChange={handleChange}
+          placeholder='Desired BPM (min 40 - max 200)' />
+      </label>
+      <label>
+        Run Length (minutes):
+        <input
+          type="number"
+          name="runLength"
+          required
+          min='5'
+          max='60'
+          value={formData.runLength}
+          onChange={handleChange}
+          placeholder='Run length in minutes(5-60)' />
+      </label>
+      <button type="submit">Generate Playlist</button>
+    </form>
+  );
 }
