@@ -9,7 +9,9 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const SCOPES = [
   "user-read-private",
   "user-read-email",
-  "user-read-playback-state"
+  "user-read-playback-state",
+  "playlist-modify-public",
+  "playlist-modify-private",
 ].join(" ");
 
 // local variables for the codes because spotify is weird
@@ -156,7 +158,7 @@ export const getCurrentlyPlaying = async (req, res) => {
 export const createPlaylist = async (req, res) => {
   console.log('this is the data we are making a playlist with:', req.body);
   const { genre, bpm, runLength } = req.body;
-  const access_token = accessTokenStore;
+  const accessToken = accessTokenStore;
   const userId = userIdStore;
 
 
@@ -166,13 +168,14 @@ export const createPlaylist = async (req, res) => {
 
   // get the recommendations
   try {
+    console.log()
     const recUrl = new URL('https://api.spotify.com/v1/recommendations');
     recUrl.searchParams.append('seed_genres', genre);
-    recUrl.searchParams.append('target_tempo', bpm);
+    recUrl.searchParams.append('target_tempo', Number(bpm));
     recUrl.searchParams.append('limit', 100); // how many songs get returned
 
     const recRes = await fetch(recUrl, {
-      headers: { Authorization: `Bearer ${access_token}` }, // pass token in header
+      headers: { Authorization: `Bearer ${accessToken}` }, // pass token in header
     });
     console.log('this is the recRes:', recRes)
     const recData = await recRes.json(); // receive the recommendations list
@@ -194,7 +197,7 @@ export const createPlaylist = async (req, res) => {
     const playlistRes = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -211,7 +214,7 @@ export const createPlaylist = async (req, res) => {
     await fetch(`https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
