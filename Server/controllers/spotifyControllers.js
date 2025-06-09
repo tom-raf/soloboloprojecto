@@ -87,7 +87,7 @@ export const getToken = async (req, res) => {
     }
 
     accessTokenStore = data.access_token;
-    console.log(data);
+    console.log('This is your access token:', accessTokenStore)
 
     // redirect to frontend with token
     res.redirect(`http://localhost:5173/?access_token=${accessTokenStore}`);
@@ -98,7 +98,8 @@ export const getToken = async (req, res) => {
 };
 
 export const getSpotifyProfile = async (req, res) => {
-  const accessToken = req.headers.authorization?.split(' ')[1];
+  // const accessToken = req.headers.authorization?.split(' ')[1];
+  const accessToken = accessTokenStore
 
   if (!accessToken) {
     return res.status(401).json({ error: 'Missing access token' });
@@ -130,7 +131,7 @@ export const createPlaylist = async (req, res) => {
 }
 
 export const getCurrentlyPlaying = async (req, res) => {
-  const accessToken = req.headers.authorization?.split(' ')[1];
+  const accessToken = accessTokenStore
   try {
     const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing",
       {

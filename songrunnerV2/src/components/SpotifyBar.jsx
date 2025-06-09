@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { data, useLocation } from "react-router-dom";
 import SpotifyPlaylist from './SpotifyPlaylist.jsx';
 
 export default function SpotifyBar () {
@@ -39,17 +39,10 @@ export default function SpotifyBar () {
   }, [location.search]);
 
   const fetchCurrentlyPlaying = () => {
-    const storedToken = localStorage.getItem("spotify_access_token")
-    if (!storedToken) return;
-
-    fetch('http://localhost:3000/currently-playing'
-      , { // call to api to see what is playing TODO: move this call to backend
-        headers: {
-          Authorization: `Bearer ${storedToken}` // pass the token
-        }
-      })
+    fetch('http://localhost:3000/currently-playing')
       .then(res => {
-        if (res.status === 204 || res.status === 202) { // check to see if track is being played
+        console.log(res);
+        if (res.status === 204 || res.status === 202) {
           setCurrentlyPlaying(null);
           return;
         }
