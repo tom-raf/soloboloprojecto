@@ -42,11 +42,12 @@ export default function SpotifyBar () {
     const storedToken = localStorage.getItem("spotify_access_token")
     if (!storedToken) return;
 
-    fetch("https://api.spotify.com/v1/me/player/currently-playing", { // call to api to see what is playing TODO: move this call to backend
-      headers: {
-        Authorization: `Bearer ${storedToken}` // pass the token
-      }
-    })
+    fetch('http://localhost:3000/currently-playing'
+      , { // call to api to see what is playing TODO: move this call to backend
+        headers: {
+          Authorization: `Bearer ${storedToken}` // pass the token
+        }
+      })
       .then(res => {
         if (res.status === 204 || res.status === 202) { // check to see if track is being played
           setCurrentlyPlaying(null);
@@ -77,7 +78,7 @@ export default function SpotifyBar () {
   }
 
   return (
-    <div>
+    <div className="spotify-bar">
       <h2>Welcome, {profile.display_name}</h2>
       {profile.images?.length > 0 && (
         <img src={profile.images[0].url} alt="Profile" width="100" />

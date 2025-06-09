@@ -127,5 +127,29 @@ export const createPlaylist = async (req, res) => {
   console.log('placeholder for create playlist')
   playlistToken = accessTokenStore
 
+}
+
+export const getCurrentlyPlaying = async (req, res) => {
+  const accessToken = req.headers.authorization?.split(' ')[1];
+  try {
+    const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json(data);
+    }
+    console.log('This is what is currently palying:', data);
+
+    res.json(data);
+  } catch (err) {
+    console.error('Spotify API error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 
 }
