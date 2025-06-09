@@ -64,13 +64,12 @@ export default function SpotifyBar () {
       )}
       <p> spacing </p>
       <iframe
-        src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp"
-        width="300"
-        height="80"
-        allow="encrypted-media"
-        allowFullScreen={false}
-        title="Spotify Player"
-      />
+        src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0wiundViT27?utm_source=generator"
+        width="100%"
+        height="352"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
       <SpotifyPlaylist></SpotifyPlaylist>
       <p>spacing</p>
       <button onClick={fetchCurrentlyPlaying} style={{ marginTop: "1rem" }}>

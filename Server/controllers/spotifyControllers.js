@@ -13,6 +13,8 @@ const SCOPES = [
   "playlist-modify-public",
   "playlist-modify-private",
   "user-library-read",
+  "playlist-read-private",
+  "playlist-read-collaborative",
 ].join(" ");
 
 // local variables for the codes because spotify is weird
@@ -164,58 +166,7 @@ export const createPlaylist = async (req, res) => {
   // const userId = userIdStore;
   console.log('this is your access token:', accessToken)
 
-  // get the recommendations
   try {
-
-    // const savedRes = await fetch(`https://api.spotify.com/v1/me/tracks?limit=50`, {
-    //   headers: { Authorization: `Bearer ${accessToken}` },
-    // });
-    // const savedData = await savedRes.json();
-    // console.log('these are the 50 tracks spotify is returning', savedData);
-    // const savedTracks = savedData.items.map(item => item.track);
-
-
-    // // 2. Get unique artist IDs
-    // const artistIds = [...new Set(savedTracks.map(track => track.artists[0]?.id).filter(Boolean))];
-
-    // // 3. Fetch genres for these artists (max 50 per request)
-    // const artistGenres = {};
-    // for (let i = 0; i < artistIds.length; i += 50) {
-    //   const chunk = artistIds.slice(i, i + 50);
-    //   const artistRes = await fetch(`https://api.spotify.com/v1/artists?ids=${chunk.join(',')}`, {
-    //     headers: { Authorization: `Bearer ${accessToken}` },
-    //   });
-    //   const artistData = await artistRes.json();
-    //   for (const artist of artistData.artists) {
-    //     artistGenres[artist.id] = artist.genres; // { "artistId": ["pop", "rock"] }
-    //   }
-    // }
-
-    // // filter for genre
-    // const genreLower = genre.toLowerCase();
-    // const matchingTracks = savedTracks.filter(track => {
-    //   const artistId = track.artists[0]?.id;
-    //   const genres = artistGenres[artistId] || [];
-    //   return genres.some(g => g.toLowerCase().includes(genreLower));
-    // });
-
-    // // filter by run length
-    // const runLengthMS = Number(runLength) * 60 * 1000; // spotify only deals in MS
-    // let totalDuration = 0;
-    // const finalTracks = [];
-
-    // for (const track of matchingTracks) {
-    //   if (totalDuration + track.duration_ms <= runLengthMS) {
-    //     finalTracks.push(track.uri);
-    //     totalDuration += track.duration_ms;
-    //   } else {
-    //     break;
-    //   }
-    // }
-
-    // if (finalTracks.length === 0) {
-    //   return res.status(400).json({ error: 'No matching tracks found for genre and duration.' });
-    // }
 
     const profileRes = await fetch('https://api.spotify.com/v1/me', {
       headers: { Authorization: `Bearer ${accessToken}` }
@@ -228,8 +179,34 @@ export const createPlaylist = async (req, res) => {
 
     const userId = profileData.id;
 
+    //get public genre specific playlists
+    //   "pop",
+    //   "rock",
+    //   "hip-hop",
+    //   "electronic",
+    //   "jazz",
+    //   "classical",
+    //   "r-n-b",
+    //   "country",
+    //   "reggae",
+    //   "metal"
+
+    const playlist_id = '23hD5D7bvXtkJGz2ni7s9e'; // have to be really careful with these only some playlists work
+
+    const getPlaylistRes = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+    })
+
+
+    const playlistTracksData = await getPlaylistRes.json();
+    console.log('playlistTracksData:', playlistTracksData);
+
+
     // make the playlist
-    const playlistRes = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+    const newPlaylistRes = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -242,28 +219,14 @@ export const createPlaylist = async (req, res) => {
       }),
     });
 
-    const playlistData = await playlistRes.json(); // return data
-    console.log('playlistData:', playlistData);
-    const playlistId = playlistData.id // this is the id for the playlist we just made
-
-    // add the recommemdations to the playlist
-
-    // await fetch(`https://api.spotify.com/v1/playlists/${playlistData.id}/tracks`, {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${accessToken}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     uris: finalTracks, //pass all the uris
-    //   }),
-    // });
+    const newPlaylistData = await newPlaylistRes.json(); // return data
+    console.log('newplaylistData:', newPlaylistData);
+    const newPlaylistId = newPlaylistData.id // this is the id for the playlist we just made
 
     // final response, return the url so we can embed it on page
     res.json({
       message: 'playlist created',
-      playlist_url: playlistData.external_urls,
-      // track_count: finalTracks.length
+      playlist_url: newPlaylistData.external_urls,
     })
 
 
@@ -272,28 +235,3 @@ export const createPlaylist = async (req, res) => {
     res.status(500).json({ error: 'failed to create playlist' });
   }
 };
-
-// console.log()
-// const recUrl = new URL('https://api.spotify.com/v1/recommendations'); TODO: this is deprecated
-// recUrl.searchParams.append('seed_genres', genre);
-// recUrl.searchParams.append('target_tempo', Number(bpm));
-// recUrl.searchParams.append('limit', 100); // how many songs get returned
-
-// const recRes = await fetch(recUrl, {
-//   headers: { Authorization: `Bearer ${accessToken}` }, // pass token in header
-// });
-// console.log('this is the recRes:', recRes)
-// const recData = await recRes.json(); // receive the recommendations list
-// const runLengthMS = runLength * 60 * 1000 //spotify only works in MS
-// let totalDuration = 0;
-// const finalTracks = []; //these are the tracks we'll put to the playlist
-
-// for (const track of recData.tracks) {
-//   if (totalDuration + track.duration_ms <= runLengthMS) {
-//     finalTracks.push(track.uri);
-//     totalDuration += track.duration_ms; // push and iterate
-//   }
-//   else {
-//     break;
-//   }
-// }
