@@ -1,34 +1,20 @@
 import express from 'express';
-// import router from './routes/SRroutes.js';
 import cors from 'cors';
-import spotifyRouter from './routes/spotifyRoutes.js';
-import dotenv from 'dotenv'
-import session from 'express-session';
+import dotenv from 'dotenv';
+import spotifyRouter from './router/spotifyRouter.js';
+import cookieParser from 'cookie-parser';
+
+
 dotenv.config();
 const app = express();
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    httpOnly: true,
-  }
-}));
-
-//standard spin up
+app.use(cors());
 const port = 3000;
 app.use(express.json());
 
+
 //connected to routers
-app.use('/api', spotifyRouter)
+app.use(cookieParser());
+app.use('/', spotifyRouter)
 
 //start up server
 app.listen(port, () => {
