@@ -185,7 +185,7 @@ export const createPlaylist = async (req, res) => {
       "electronic": "2ZxWjBMlRYQfENCeMl1Sab",
       "jazz": "3BVbH9zuT0T0EXodND8LfS",
       "classical": "34lPKDQ8gTZW4wXDR8G6kM",
-      "dnb": "6a83Dkuyr2OJtlCmAQKG82",
+      "drum-n-bass": "6a83Dkuyr2OJtlCmAQKG82",
       "metal": "0cMpgbvQxoOYrT7IoCx2Gn"
     };
 
@@ -260,8 +260,9 @@ export const createPlaylist = async (req, res) => {
     // final response, return the url so we can embed it on page
     res.json({
       message: 'playlist created',
-      playlist_url: newPlaylistData.external_urls,
+      playlist_url: newPlaylistData.external_urls.spotify
     })
+    console.log('backend response to playlist generation:', res)
 
 
   } catch (error) {
