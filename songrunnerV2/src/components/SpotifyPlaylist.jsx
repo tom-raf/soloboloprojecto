@@ -92,7 +92,7 @@ export default function SpotifyPlaylist () {
       {embedUrl && (
         <div style={{ marginTop: '2rem' }}>
           <iframe
-            src={embedUrl}
+            src={embedUrl + '?theme=0'}
             width="100%"
             height="380"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -105,3 +105,4 @@ export default function SpotifyPlaylist () {
 
   );
 }
+

@@ -1,30 +1,137 @@
+html,
+body,
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
 }
 
+.scrolling-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../src/assets/songrunnerbg7.jpg');
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  background-position: 0 0;
+  animation: scrollBackground 240s linear infinite;
+  z-index: -1;
+}
+
+@keyframes scrollBackground {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 10000px 0;
+  }
+}
+
+/* Full App Styles */
 .full-app {
-  border: 5px solid red
+  position: absolute;
+  z-index: 1;
+
+  padding: 50px;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  /* Optional: Add rounded corners */
+  border: 10px solid black
 }
 
-.title {
-  border: 5px solid yellow
+/* Title Image Styles */
+.title-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  background-image: url('../src/assets/songrunnertitle.jpg');
 }
 
+/* Spotify Bar Styles */
 .spotify-bar {
-  border: 5px solid pink;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .profile-bar {
-  border: 5px solid lightskyblue
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
 }
 
+/* Make each child take up equal space */
+.profile-bar img,
+.profile-bar h2,
+.profile-bar button {
+  flex: 1;
+  text-align: center;
+}
+
+/* Optional: Make image responsive within its space */
+.profile-bar img {
+  max-width: 80px;
+  height: auto;
+
+  display: block;
+  margin: 0 auto;
+}
+
+/* Make button fill space but look nice */
+.profile-bar button {
+  padding: 0.5rem 1rem;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Playlist Bar Styles */
 .playlist-bar {
-  border: 5px solid rgb(255, 255, 255)
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .playlist-form {
-  border: 5px solid greenyellow
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.playlist-form>div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.playlist-form label {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.playlist-form input,
+.playlist-form select {
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.playlist-form button {
+  margin-top: 1rem;
+  align-self: center;
+  padding: 0.5rem 1rem;
 }

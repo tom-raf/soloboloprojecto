@@ -12,7 +12,8 @@ function App () {
         <h1 className='title'>SongRunner</h1>
         <SpotifyBar />
       </div>
-    </Router>
+      <div className='scrolling-background'></div>
+    </Router >
   )
 }
 

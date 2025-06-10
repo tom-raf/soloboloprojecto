@@ -59,15 +59,13 @@ export default function SpotifyBar () {
   return (
     <div className="spotify-bar">
       <div className="profile-bar">
-        <h2>Welcome, {profile.display_name}</h2>
         {profile.images?.length > 0 && (
           <img src={profile.images[0].url} alt="Profile" width="100" />
         )}
+        <h2>{profile.display_name}</h2>
         <button>How-to</button>
       </div>
-      <p> spacing </p>
       <SpotifyPlaylist></SpotifyPlaylist>
-      <p>spacing</p>
     </div>
 
   );
