@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import '../App.css';
 
 export default function SpotifyPlaylist () {
   const [formData, setFormData] = useState({
@@ -59,8 +60,8 @@ export default function SpotifyPlaylist () {
   ];
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className='playlist-bar'>
+      <form className='playlist-form' onSubmit={handleSubmit}>
         <label>
           Genre:
           <select
@@ -88,14 +89,12 @@ export default function SpotifyPlaylist () {
         </label>
         <button type="submit">Generate Playlist</button>
       </form>
-      <p>more spacing</p>
       {embedUrl && (
         <div style={{ marginTop: '2rem' }}>
           <iframe
             src={embedUrl}
             width="100%"
             height="380"
-            frameBorder="0"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
             title="Spotify Playlist"

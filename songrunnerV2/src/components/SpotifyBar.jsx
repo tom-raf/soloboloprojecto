@@ -58,39 +58,16 @@ export default function SpotifyBar () {
 
   return (
     <div className="spotify-bar">
-      <h2>Welcome, {profile.display_name}</h2>
-      {profile.images?.length > 0 && (
-        <img src={profile.images[0].url} alt="Profile" width="100" />
-      )}
+      <div className="profile-bar">
+        <h2>Welcome, {profile.display_name}</h2>
+        {profile.images?.length > 0 && (
+          <img src={profile.images[0].url} alt="Profile" width="100" />
+        )}
+        <button>How-to</button>
+      </div>
       <p> spacing </p>
-      <iframe
-        src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0wiundViT27?utm_source=generator"
-        width="100%"
-        height="352"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy">
-      </iframe>
       <SpotifyPlaylist></SpotifyPlaylist>
       <p>spacing</p>
-      <button onClick={fetchCurrentlyPlaying} style={{ marginTop: "1rem" }}>
-        Refresh Currently Playing
-      </button>
-      {currentlyPlaying && currentlyPlaying.item ? (
-        <div style={{ marginTop: "1rem" }}>
-          <h3>Currently Playing</h3>
-          <p>
-            <strong>{currentlyPlaying.item.name}</strong> by{" "}
-            {currentlyPlaying.item.artists.map(artist => artist.name).join(", ")}
-          </p>
-          <img
-            src={currentlyPlaying.item.album.images[0].url}
-            alt="Album Art"
-            width={100}
-          />
-        </div>
-      ) : (
-        <p style={{ marginTop: "1rem" }}>Nothing currently playing</p>
-      )}
     </div>
 
   );

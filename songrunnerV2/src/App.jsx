@@ -8,10 +8,10 @@ function App () {
 
   return (
     <Router>
-      <>
-        <p>hello</p>
+      <div className='full-app'>
+        <h1 className='title'>SongRunner</h1>
         <SpotifyBar />
-      </>
+      </div>
     </Router>
   )
 }
