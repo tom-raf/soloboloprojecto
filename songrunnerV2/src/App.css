@@ -9,6 +9,7 @@ body,
   align-items: center;
   justify-content: center;
   background: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .scrolling-background {
@@ -54,7 +55,7 @@ body,
   margin: 0 auto;
   max-width: 100%;
   height: auto;
-  background-image: url('../src/assets/songrunnertitle.jpg');
+  padding-bottom: 10px;
 }
 
 /* Spotify Bar Styles */
@@ -70,6 +71,7 @@ body,
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
+  padding-bottom: 25px;
 }
 
 /* Make each child take up equal space */
