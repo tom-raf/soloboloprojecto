@@ -46,7 +46,6 @@ body,
 .full-app {
   position: absolute;
   z-index: 1;
-
   padding: 50px;
   text-align: center;
   background-color: white;
@@ -218,4 +217,12 @@ body,
 .how-to-button:hover {
   background-color: yellow;
   color: black;
+}
+
+.embed-container {
+  max-height: 20vh;
+  /* or whatever fits nicely */
+  overflow: auto;
+  margin-top: 2rem;
+  border-radius: 8px;
 }

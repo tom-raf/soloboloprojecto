@@ -90,7 +90,7 @@ export default function SpotifyPlaylist () {
         <button type="submit">GEN PLAYLIST</button>
       </form>
       {embedUrl && (
-        <div style={{ marginTop: '2rem' }}>
+        <div style={{ marginTop: '2rem' }} className='embed-container'>
           <iframe
             src={embedUrl + '?theme=0'}
             width="100%"
