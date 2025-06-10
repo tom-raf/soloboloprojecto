@@ -63,20 +63,20 @@ export default function SpotifyPlaylist () {
     <div className='playlist-bar'>
       <form className='playlist-form' onSubmit={handleSubmit}>
         <label>
-          Genre:
+          GENRE:
           <select
             name="genre"
             value={formData.genre}
             onChange={handleChange}
             required>
-            <option value="">Select a genre</option>
+            <option value="">select genre</option>
             {genreOptions.map((genre) => (
               <option key={genre} value={genre}>{genre}</option>
             ))}
           </select>
         </label>
         <label>
-          Run Length (minutes):
+          RUN LENGTH:
           <input
             type="number"
             name="runLength"
@@ -85,9 +85,9 @@ export default function SpotifyPlaylist () {
             max='60'
             value={formData.runLength}
             onChange={handleChange}
-            placeholder='Run length in minutes(5-60)' />
+            placeholder='run length (minutes)' />
         </label>
-        <button type="submit">Generate Playlist</button>
+        <button type="submit">GEN PLAYLIST</button>
       </form>
       {embedUrl && (
         <div style={{ marginTop: '2rem' }}>

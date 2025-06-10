@@ -10,6 +10,12 @@ body,
   justify-content: center;
   background: none;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+
+.button {
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .scrolling-background {
@@ -36,7 +42,7 @@ body,
   }
 }
 
-/* Full App Styles */
+/* hits the entire app block */
 .full-app {
   position: absolute;
   z-index: 1;
@@ -44,12 +50,10 @@ body,
   padding: 50px;
   text-align: center;
   background-color: white;
-  border-radius: 10px;
-  /* Optional: Add rounded corners */
+  border-radius: 5px;
   border: 10px solid black
 }
 
-/* Title Image Styles */
 .title-image {
   display: block;
   margin: 0 auto;
@@ -58,7 +62,7 @@ body,
   padding-bottom: 10px;
 }
 
-/* Spotify Bar Styles */
+
 .spotify-bar {
   display: flex;
   flex-direction: column;
@@ -74,7 +78,7 @@ body,
   padding-bottom: 25px;
 }
 
-/* Make each child take up equal space */
+/*this is so the ratio is correct */
 .profile-bar img,
 .profile-bar h2,
 .profile-bar button {
@@ -82,7 +86,6 @@ body,
   text-align: center;
 }
 
-/* Optional: Make image responsive within its space */
 .profile-bar img {
   max-width: 80px;
   height: auto;
@@ -91,7 +94,7 @@ body,
   margin: 0 auto;
 }
 
-/* Make button fill space but look nice */
+
 .profile-bar button {
   padding: 0.5rem 1rem;
   max-width: 100%;
@@ -100,7 +103,6 @@ body,
   text-overflow: ellipsis;
 }
 
-/* Playlist Bar Styles */
 .playlist-bar {
   display: flex;
   flex-direction: column;
@@ -136,4 +138,84 @@ body,
   margin-top: 1rem;
   align-self: center;
   padding: 0.5rem 1rem;
+  background-color: black;
+  color: yellow;
+  font-weight: bold;
+  border: 2px solid yellow;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.playlist-form button:hover {
+  background-color: yellow;
+  color: black;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* semi-transparent backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: black;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  color: yellow;
+  border: 2px solid yellow;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.modal-content p {
+  margin: 0.5rem 0;
+}
+
+.close-button {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  background-color: black;
+  color: yellow;
+  font-weight: bold;
+  border: 2px solid yellow;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.close-button:hover {
+  background-color: yellow;
+  color: black;
+}
+
+.how-to-button {
+  background-color: black;
+  color: yellow;
+  font-weight: bold;
+  border: 2px solid yellow;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.how-to-button:hover {
+  background-color: yellow;
+  color: black;
 }
