@@ -199,11 +199,30 @@ export const createPlaylist = async (req, res) => {
       }
     });
 
+    const playlistData = await getPlaylistRes.json();
+    if (!playlistData.tracks?.items) {
+      return res.status(400).json({ error: 'Could not get tracks from source playlist' });
+    }
 
+    // pull and filter the tracks 
+    const sourceTracks = playlistData.tracks.items
+      .map(item => item.track)
+      .filter(Boolean);
 
-    const playlistTracksData = await getPlaylistRes.json();
-    console.log('playlistTracksData:', playlistTracksData);
+    const runLengthMs = runLength * 60 * 1000;
+    let totalDuration = 0;
+    const selectedTrackUris = [];
 
+    for (const track of sourceTracks) {
+      if (track.duration_ms + totalDuration <= runLengthMs) {
+        selectedTrackUris.push(track.uri);
+        totalDuration += track.duration_ms;
+      } else {
+        break;
+      }
+    }
+
+    console.log('these are the filtered tracks:', selectedTrackUris)
 
     // make the playlist
     const newPlaylistRes = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
@@ -222,6 +241,20 @@ export const createPlaylist = async (req, res) => {
     const newPlaylistData = await newPlaylistRes.json(); // return data
     console.log('newplaylistData:', newPlaylistData);
     const newPlaylistId = newPlaylistData.id // this is the id for the playlist we just made
+
+
+
+    // add the right songs to the playlist
+    await fetch(`https://api.spotify.com/v1/playlists/${newPlaylistId}/tracks`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uris: selectedTrackUris
+      })
+    });
 
     // final response, return the url so we can embed it on page
     res.json({
